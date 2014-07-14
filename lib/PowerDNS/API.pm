@@ -42,8 +42,8 @@ sub startup {
         ['domain/*domain' => 'PUT'  => 'put_domain'],
 
         ['record/*domain'     => 'POST' => 'post_record'],
-        ['record/*domain/*id' => 'PUT'  => 'put_record'],
-        ['record/*domain/*id' => 'DELETE' => 'delete_record'],
+        ['record/*domain/*name' => 'PUT'  => 'put_record'],
+        ['record/*domain/*name' => 'DELETE' => 'delete_record'],
     );
 
     for my $h (@api_handlers) {

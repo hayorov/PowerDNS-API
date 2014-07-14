@@ -180,7 +180,7 @@ sub put_record {
     my $account = $self->stash('account') or die $self->render_error(401, "unauthorized");
 
     my $domain_name = $self->stash('domain') or die $self->render_error(400);
-    my $record_id   = $self->stash('id') or die $self->render_error(400, "record id required");
+    my $record_name   = $self->stash('name') or die $self->render_error(400, "record id required");
 
     my $txn = $self->schema->txn_scope_guard;
 
@@ -195,7 +195,7 @@ sub put_record {
 
     $self->_check_cas($domain);
 
-    my $record = $self->schema->record->find({ id => $record_id, domain_id => $domain->id })
+    my $record = $self->schema->record->find({ name => $record_name, domain_id => $domain->id })
       or die $self->render_error(404, "record not found");
 
     # TODO:
@@ -281,7 +281,7 @@ sub delete_record {
     my $account = $self->stash('account') or die $self->render_error(401, "unauthorized");
 
     my $domain_name = $self->stash('domain') or die $self->render_error(400,);
-    my $record_id   = $self->stash('id') or die $self->render_error(400,"record id required");
+    my $record_name   = $self->stash('name') or die $self->render_error(400,"record id required");
 
     my $txn = $self->schema->txn_scope_guard;
 
@@ -296,7 +296,7 @@ sub delete_record {
 
     $self->_check_cas($domain);
 
-    my $record = $self->schema->record->find({ id => $record_id, domain_id => $domain->id })
+    my $record = $self->schema->record->find({ name => $record_name, domain_id => $domain->id })
       or die $self->render_error(404, "record not found");
 
     $record->delete;
